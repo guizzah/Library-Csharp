@@ -1,0 +1,24 @@
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            string server;
+            string sql;
+            
+            server = txtServer.Text;
+            sql = "SELECT NAME FROM SYSDATABASES WHERE NAME LIKE '%RDB'";
+            string connectionString = "Data Source =" + server + "; Initial Catalog = master; Integrated Security = SSPI; Trusted_Connection=True;";
+            SqlConnection sqlConn = new SqlConnection(connectionString);
+
+            sqlConn.Open();
+            cproj.BackColor = Color.White;
+            cproj.Enabled = true;
+            SqlCommand cmd = new SqlCommand(sql, sqlConn);   
+            SqlDataReader dr = cmd.ExecuteReader(); 
+            while (dr.Read())
+            {
+                cproj.Items.Add(dr[0]);
+            }
+
+            sqlConn.Close();
+        }
+
+
